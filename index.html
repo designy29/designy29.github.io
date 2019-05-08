@@ -157,23 +157,24 @@
                         <div class="contact-form">
                             <form method="post">
                                 <h3>Drop Us a Message</h3>
+                                <h4 class="success_post">We will contact you shortly. Thank You</h4>
                                 <div class="row">
                                     <div class="col">
                                             <div class="mx-auto w-100 p-3 text-white text-center">
                                         <div class="form-group">
                                             <input type="text" name="txtName" class="form-control"
-                                                placeholder="Your Name *" value="" />
+                                                placeholder="Your Name *" value="" id="name" required/>
                                         </div>
                                         <div class="form-group">
                                             <input type="text" name="txtEmail" class="form-control"
-                                                placeholder="Your Email *" value="" />
+                                                placeholder="Your Email *" value="" id="email" required/>
                                         </div>
                                         <div class="form-group">
                                             <textarea name="txtMsg" class="form-control" placeholder="Your Message *"
-                                                style="width: 100%; height: 150px;"></textarea>
+                                                style="width: 100%; height: 150px;" id="msg" required></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <input type="submit" name="btnSubmit" class="btn btn-primary"
+                                            <input type="submit" id="submit" name="btnSubmit" class="btn btn-primary"
                                                 value="Send Message" />
                                         </div>
                                         </div>
@@ -193,11 +194,42 @@
     </footer>
 
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
-    </script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#submit').click(function(e){
+                e.preventDefault();
+                var name = "Name: " + document.getElementById('name').value;
+                var email = "Email: " +  document.getElementById('email').value;
+                var msg = "Message: " +  document.getElementById('msg').value;
+
+                var data = name + " " + email + " " + msg
+
+                var url = "https://hooks.slack.com/services/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";
+                $.ajax({
+                    data: 'payload=' + JSON.stringify({
+                    "text": data,
+                    "username":"website"
+                    }),
+                    dataType: 'json',
+                    processData: false,
+                    type: 'POST',
+                    url: url
+                });
+
+                 document.getElementById('name').value = "";
+                 document.getElementById('email').value = "";
+                 document.getElementById('msg').value = "";
+
+                $('.success_post').css('display','block');
+
+
+
+            });
+        })
     </script>
 </body>
 

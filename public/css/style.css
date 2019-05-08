@@ -151,6 +151,12 @@ body {
     text-align: center;
     color: var(--primary-color);
 }
+.contact-form h4{
+    color:green;
+    text-align: center;
+    font-weight: bold;
+    display: none;
+}
 .contact-form .btnContact {
     width: 50%;
     border: none;
